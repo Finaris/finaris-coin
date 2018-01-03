@@ -13,6 +13,9 @@ public class BlockChain {
     // HashMap of Block hashes to Blocks will be internal structure.
     private HashMap<String, Block> chain = new HashMap<>();
 
+    // Initially empty genesisBlock.
+    private Block genesisBlock = null;
+
     public BlockChain() {}
 
     /** Determines if the new block we wish to add results in a valid block chain.
@@ -23,10 +26,11 @@ public class BlockChain {
      * @return Boolean determining if a provided block can be validly added to the block chain.
      */
     public boolean isValidNewBlock(Block newBlock, Block previousBlock) {
-        /* Check to make sure that the index is one greater and that the previousHash in the newBlock is the same
-         * as the hash of the previousBlock. */
+        /* Check to make sure that the index is one greater, that the previousHash in the newBlock is the same
+         * as the hash of the previousBlock, and that a block with the previous hash exists in the chain. */
         if (previousBlock.getIndex() != newBlock.getIndex() - 1 ||
-                !previousBlock.getHash().equals(newBlock.getPreviousHash()))
+                !previousBlock.getHash().equals(newBlock.getPreviousHash()) ||
+                !chain.containsKey(newBlock.getPreviousHash()))
             return false;
 
         // Sanity check for a proper hash on the newBlock.
@@ -43,15 +47,20 @@ public class BlockChain {
         if (chain.size() == 0 && block.getPreviousHash() == null && block.getIndex() == 0) {
             chain.put(block.getHash(), block);
         } else if (chain.size() > 0) {
-            /* First check to make sure that a block with the previous hash exists in the chain. Then, check
-             * to make sure that it can properly be added to the chain. */
-            if (!chain.containsKey(block.getPreviousHash()) ||
-                    !isValidNewBlock(block, chain.get(block.getPreviousHash())))
+            // Check to make sure that it can properly be added to the chain.
+            if (!isValidNewBlock(block, chain.get(block.getPreviousHash())))
                 throw new MalformedParametersException();
             chain.put(block.getHash(), block);
         } else {
             throw new MalformedParametersException();
         }
+    }
+
+    // Getter for genesisBlock.
+    public Block getGenesisBlock() {
+        if (genesisBlock == null)
+            throw new NullPointerException();
+        return genesisBlock;
     }
 
 }

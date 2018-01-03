@@ -20,12 +20,12 @@ public class BlockChainTest {
         Block newBlock = new Block(2, "BAR", 234567891, newBlockHash, genesisHash);
         Assert.assertFalse(chain.isValidNewBlock(genesisBlock, newBlock));
 
-        // Check if index is invalid on the same block with a corrected index, but with an incorrect previous hash.
+        // Check if block is invalid on the same block with a corrected index, but with an incorrect previous hash.
         newBlockHash = BlockUtilities.hashBlock(1, "BAR", 234567891, genesisHash);
         newBlock = new Block(1, "BAR", 234567891, newBlockHash, newBlockHash);
         Assert.assertFalse(chain.isValidNewBlock(genesisBlock, newBlock));
 
-        // Check if index is invalid on the same block with a corrected index, but with a malformed hash.
+        // Check if block is invalid on the same block with a malformed hash.
         newBlock = new Block(1, "BAR", 234567891, newBlockHash, "null");
         Assert.assertFalse(chain.isValidNewBlock(genesisBlock, newBlock));
 
