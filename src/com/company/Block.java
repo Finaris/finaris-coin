@@ -27,9 +27,13 @@ public class Block {
         return data;
     }
 
-    public long getTimestamp() { return timestamp; }
+    public long getTimestamp() {
+        return timestamp;
+    }
 
-    public String getHash(){ return hash; }
+    public String getHash(){
+        return hash;
+    }
 
     public String getPreviousHash(){
         return previousHash;
