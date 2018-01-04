@@ -11,13 +11,12 @@ public class BlockChainTest {
 
     @Test
     public void testAdd() {
-        // Test the functionality of add() as well as isValidNewBlock() on a BlockChain object.
-        BlockChain chain = new BlockChain();
+        // Creates a test chain with a single genesisBlock (data: "TEST", timestamp: 123456789).
+        BlockChain chain = BlockUtilities.setupTestChain();
 
-        // Creates genesis block with data "TEST" at timestamp 123456789 seconds and add to chain.
-        String genesisHash = BlockUtilities.hashBlock(0, "TEST", 123456789, null);
-        Block genesisBlock = new Block(0, "TEST", 123456789, genesisHash, null);
-        chain.add(genesisBlock);
+        // Get the genesis block and its hash for testing below.
+        Block genesisBlock = chain.getGenesisBlock();
+        String genesisHash = genesisBlock.getHash();
 
         /* Check how validity changes if we modify a valid Block with fields:
          * index: 1, data: "BAR", timestamp: 234567891, previousHash: genesisHash
@@ -48,6 +47,19 @@ public class BlockChainTest {
             Assert.assertEquals(entry.getValue(), chain.isValidNewBlock(entry.getKey(), genesisBlock));
         }
 
+    }
+
+    @Test
+    public void testIsValidChain() {
+        /* Any chain which is made should always be valid (as we have safe guards in place in add() unless something
+         * goes horribly wrong, but it doesn't hurt to have an extra sanity check. */
+        BlockChain chain = BlockUtilities.setupTestChain();
+        Block genesisBlock = chain.getGenesisBlock();
+
+        // Add a random block which is connected to the genesis block of the test chain.
+        chain.add(new Block(1, "BAR", 12345, BlockUtilities.hashBlock(1, "BAR", 12345, genesisBlock.getHash()),
+                genesisBlock.getHash()));
+        Assert.assertTrue(chain.isValidChain(genesisBlock));
     }
 
 }
