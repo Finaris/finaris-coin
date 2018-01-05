@@ -1,4 +1,4 @@
-package com.company;
+package com.blockchain;
 
 /**
  * Struct-like class which contains definition of a block.

@@ -1,4 +1,4 @@
-package com.company;
+package com.blockchain;
 
 /**
  * Simple class for containing two objects which are used in comparisons for testing purposes.

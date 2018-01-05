@@ -1,4 +1,4 @@
-package com.company;
+package com.blockchain;
 
 import org.junit.Assert;
 import org.junit.Test;
