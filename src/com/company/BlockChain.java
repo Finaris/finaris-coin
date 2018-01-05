@@ -140,8 +140,6 @@ public class BlockChain {
 
     // Getters for genesis block and the main chain.
     public Block getGenesisBlock() {
-        if (genesisBlock == null)
-            throw new NullPointerException();
         return genesisBlock;
     }
 
