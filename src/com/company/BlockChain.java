@@ -76,7 +76,7 @@ public class BlockChain {
         return (shouldHaveGenesis && depth.get(0).size() == 1) || (!shouldHaveGenesis && depth.get(0).size() == 0);
     }
 
-    /** Adds a new block to the block mainChain.
+    /** Adds a new block to the block chain and updates the main chain if needed.
      *
      * @param block Block to add.
      */
@@ -105,7 +105,7 @@ public class BlockChain {
         updateBlockChain(block);
     }
 
-    /** After validating a block, we need to update all internal data structures and the main mainChain.
+    /** After validating a block, we need to update all internal data structures and the main chain.
      *
      * @param block Block which will be used to update the block mainChain.
      */
